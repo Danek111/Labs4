@@ -7,6 +7,7 @@
     <title></title>
 </head>
 <body>
+    <a href="{% url 'login' %}">Регистрация</a>
     <form method="POST" action="create/">
         {% csrf_token %}
         <p><label>Введите название Фильма</label><br><input type="text" name="name" />
@@ -33,7 +34,7 @@
             <td>{{ film.date_view  }}<b></b></td>
             <td>{{ film.actors  }}<b></b></td>
             <td>{{ category  }}<b></b></td>
-            <td><a href="edit/{{film.id}}">Изменить</a>  <a href="delete/{{film.id}}">Удалить</a></td>
+            <td><a href="edit/{{film.id}}">Изменить</a><a href="delete/{{film.id}}">Удалить</a></td>
         </tr>
         {% endfor %}
     </table>

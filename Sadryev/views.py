@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from .models import Films,Category
+from .models import Films, Category
 from django.http import HttpResponseRedirect, HttpResponseNotFound
+
 
 # Create your views here.
 
 def index(request):
     films = Films.objects.all()
     return render(request, "index.html", {"films": films})
+
 
 def create(request):
     if request.method == "POST":
@@ -20,11 +22,14 @@ def create(request):
         film.save()
     return HttpResponseRedirect("/")
 
-def edit(request, id):
+
+
+
+def edit(request, pk):
     try:
-        category = Category.objects.get(id=id)
-        films = Films.objects.get(id=id)
-        if request.method == "POST":  
+        category = Category.objects.get(id=pk)
+        films = Films.objects.get(id=pk)
+        if request.method == "POST":
             category.name = request.POST.get('category')
             films.name = request.POST.get("name")
             films.date_out = request.POST.get("date_out")
@@ -37,15 +42,18 @@ def edit(request, id):
     except Films.DoesNotExist:
         return HttpResponseNotFound("<h2>Film not found</h2>")
 
-def delete(request, id):
+
+def delete(request, pk):
     try:
-        films = Films.objects.get(id=id)
+        films = Films.objects.get(id=pk)
         films.delete()
         return HttpResponseRedirect("/")
     except Films.DoesNotExist:
         return HttpResponseNotFound("<h2>Film not found</h2>")
 
+
 def create_category():
-    Category.objects.create(name = "fantastic")
-    Category.objects.create(name = "Drama")
-    Category.objects.create(name = "triller")
+    Category.objects.create(name="fantastic")
+    Category.objects.create(name="Drama")
+    Category.objects.create(name="triller")
+
